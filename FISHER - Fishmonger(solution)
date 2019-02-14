@@ -1,0 +1,180 @@
+//copy right by Ad_win(Ajeet Singh)
+#include <bits/stdc++.h>
+using namespace std;
+#define puba push_back
+#define mapa make_pair
+#define ff first
+#define ss second
+
+void fast(){
+std::ios_base::sync_with_stdio(false);
+cin.tie(NULL);
+cout.tie(NULL);
+}
+
+#define ll          long long
+#define pii         pair<ll,ll>
+#define vi          vector<ll>
+#define vii         vector<pii>
+#define mi          map<ll,ll>
+#define mii         map<pii,ll>
+#define all(a)      (a).begin(),(a).end()
+#define sz(x)       (int)x.size()
+#define endl        '\n'
+const ll MOD = 1e9+7;
+#define rep(i, a, b) for(ll i=a; i<b; ++i)
+#define repe(i, a, b) for(ll i=a; i<=b; ++i)
+#define jrep(i, a, b, c) for(ll i=a; i<b; i+=c)
+#define jrepe(i, a, b, c) for(ll i=a;i<=b; i+=c)
+#define inp(i, n, a) for(ll i=0;i<n;i++) cin>>a[i];
+
+ //vector<pair<ll,pair<ll,ll> > > vt;
+
+ //vector<vector<pair<ll,pair<ll,ll> > > > vc;
+ vi gp[10005];
+ ll vis[10005];
+ ll path[100005];
+ ll toll[1005][1005];
+ ll time1[1000][1000];
+ ll t,n;
+ ll mn=INT_MAX;//paise
+ ll idx;
+ ll finaltime;
+
+ void dfs(ll i,ll tot,ll paise)
+ {
+     vis[i]=1;
+     if(tot>t)
+        return;
+     if(paise>mn)
+        return;
+     if(i==n-1)
+     {
+         if(mn>paise)
+         {
+             mn=paise;
+             finaltime=tot;
+         }
+         else if(mn==paise)
+         {
+             if(finaltime>tot)
+             {
+              mn=paise;
+              finaltime=tot;
+             }
+         }
+         return;
+     }
+     rep(j,0,n)
+     {
+         if(i!=j)
+         {
+             dfs(j,tot+time1[i][j],paise+toll[i][j]);
+         }
+     }
+     vis[i]=0;
+
+
+
+
+
+ }
+
+/*void dfs(ll s,ll d)
+{
+    vis[s]=1;
+    path[idx]=s;
+    idx++;
+    if(s==d)
+    {
+        ll i;
+        ll lst=0;
+        ll tt=0;
+        ll ttoll=0;
+        for(i=1;i<idx;i++)
+        {
+            tt+=time1[lst][path[i]];
+            ttoll+=toll[lst][path[i]];
+            lst=path[i];
+        }
+        if(tt<=t)
+        {
+            if(mn>ttoll)
+            {
+                mn=ttoll;
+                finaltime=tt;
+            }
+        }
+
+    }
+    else
+    {
+        ll tmp,j;
+        for(j=0;j<gp[s].size();j++)
+        {
+            tmp=gp[s][j];
+            if(vis[tmp]==0)
+            {
+                dfs(tmp,d);
+            }
+        }
+    }
+    idx--;
+    vis[s]=0;
+
+}
+*/
+
+int main()
+{
+    while(1)
+    {
+
+ cin>>n>>t;
+ if(n==0&&t==0)
+    return 0;
+
+    rep(i,0,n+1)
+ gp[i].clear();
+ finaltime=0;
+ idx=0;
+ mn=INT_MAX;
+ rep(i,0,n+1)
+ {
+     vis[i]=0;
+     path[i]=0;
+ }
+
+ rep(i,0,n)
+ {
+     rep(j,0,n)
+     {
+         cin>>time1[i][j];
+     }
+ }
+ rep(i,0,n)
+ {
+     rep(j,0,n)
+     {
+         if(i!=j);
+         gp[i].puba(j);
+         cin>>toll[i][j];
+     }
+ }
+
+ /*rep(i,0,n)
+ {
+     rep(j,0,n){
+     if(i!=j){
+
+     vt.puba({j,{time1[i][j],toll[i][j]}});
+ }
+     }
+ vc.puba(vt);
+ vt.clear();
+ }*/
+dfs(0,0,0);
+
+cout<<mn<<" "<<finaltime<<endl;
+}
+}
