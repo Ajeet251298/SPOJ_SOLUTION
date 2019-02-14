@@ -1,0 +1,82 @@
+//copy right by Ad_win(ajeet singh)
+#include <bits/stdc++.h>
+using namespace std;
+#define puba push_back
+#define mapa make_pair
+#define ff first
+#define ss second
+
+void fast(){
+std::ios_base::sync_with_stdio(false);
+cin.tie(NULL);
+cout.tie(NULL);
+}
+
+#define ll          long long
+#define pii         pair<ll,ll>
+#define vi          vector<ll>
+#define vii         vector<pii>
+#define mi          map<ll,ll>
+#define mii         map<pii,ll>
+#define all(a)      (a).begin(),(a).end()
+#define sz(x)       (int)x.size()
+#define endl        '\n'
+const ll MOD = 1e9+7;
+#define rep(i, a, b) for(ll i=a; i<b; ++i)
+#define repe(i, a, b) for(ll i=a; i<=b; ++i)
+#define jrep(i, a, b, c) for(ll i=a; i<b; i+=c)
+#define jrepe(i, a, b, c) for(ll i=a;i<=b; i+=c)
+#define inp(i, n, a) for(ll i=0;i<n;i++) cin>>a[i];
+
+vi gp[100005];
+ll vis[100005][2];
+vi ans;
+ll dp[100005][2];
+ll dfs(ll i,ll taken,ll par)
+{
+      if(vis[i][taken]==1)
+        return dp[i][taken];
+      vis[i][taken]=1;
+      if(dp[i][taken]!=0)
+        return dp[i][taken];
+      ll tmp,j;
+      ll ans=0;
+      for(j=0;j<gp[i].size();j++)
+      {
+          tmp=gp[i][j];
+          if(tmp!=par)
+          {
+              if(taken)
+                ans+=min(dfs(tmp,1,i),dfs(tmp,0,i));
+              else
+                ans+=dfs(tmp,1,i);
+          }
+      }
+      ans+=taken;
+      dp[i][taken]=ans;
+      return dp[i][taken];
+
+}
+int main()
+{
+ ll n;
+ cin>>n;
+ ll x,y;
+
+ rep(i,0,n-1)
+ {
+     cin>>x>>y;
+     gp[x].puba(y);
+     gp[y].puba(x);
+ }
+ ll m1=dfs(1,1,-1);
+ rep(i,0,n+1)
+ {
+     rep(j,0,2){
+     dp[i][j]=0;
+     vis[i][j]=0;
+     }
+ }
+ ll m2=dfs(1,0,-1);
+ cout<<min(m1,m2)<<endl;
+}
